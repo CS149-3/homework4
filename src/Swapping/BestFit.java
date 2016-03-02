@@ -1,11 +1,13 @@
 package Swapping;
 
+import java.util.Comparator;
 import Swapping.Memory.Block;
+import java.util.ArrayList;
 
 public class BestFit implements Swap {
 	
 	public BestFit() {
-		// Doubt you need to use this, nothing needs to be remembered, just find the best fit
+		// Unused
 	}
 	
 	/**
@@ -14,11 +16,32 @@ public class BestFit implements Swap {
 	 */
 	@Override
 	public boolean swap(Process process, Memory memory) {
-		/*
-		 *  If you remember doing a max search, that might be a good idea here, except you are searching for the closest
-		 *  block size that can still big enough to contain 
+		
+		// Sort the list of free blocks by size
+		ArrayList<Block> freeBlocks = memory.getFreeBlocks();
+		freeBlocks.sort(new SizeComparator());
+		
+		/* Since the list is sorted by size this will now find the smallest 
+		 * possible space that is at least the size of the process
 		 */
+		for (Block b : freeBlocks) {
+			if (b.getSize() >= process.getSize()) {
+				memory.swapProcess(process, b);
+				return true;
+			}
+		}
 		return false;
 	}
-
+	
+	private static class SizeComparator implements Comparator<Block> {
+		@Override
+		public int compare(Block b1, Block b2) {
+			if (b1.getSize() < b2.getSize()) 
+				return -1;
+			else if (b1.getSize() == b2.getSize()) 
+				return 0;
+			else 
+				return 1;
+		}
+	}
 }
