@@ -117,7 +117,7 @@ public class Memory {
 	 * @param process process to remove from memory
 	 */
 	public void removeProcess(Process process) {
-		for (int i = process.getStartingIndex(); i < process.getSize(); i++) {
+		for (int i = process.getStartingIndex(); i < (process.getStartingIndex() + process.getSize()); i++) {
 			memory[i] = 0;
 		}
 	}
