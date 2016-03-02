@@ -49,9 +49,18 @@ public class Memory {
 	}
 	
 	/**
+	 * Convenience version of getNextBlock(int index)
+	 * @param block use this block's index as starting point
+	 * @return Block return index and size of next block in memory
+	 */
+	public Block getNextBlock(Block block) {
+		return getNextBlock(block.getIndex());
+	}
+	
+	/**
 	 * Return index of next block. 
 	 * @param index - Starting point of check
-	 * @return Integer value of the index location of next block or 0 if checked block is last block in memory. 
+	 * @return block return index and size of next block in memory
 	 */
 	public Block getNextBlock(int index){
 		if(memory[index] != 0){
@@ -73,6 +82,15 @@ public class Memory {
 			return new Block(0, checkMem(0));
 		}
 		return new Block(index, checkMem(index));
+	}
+	
+	/**
+	 * Convenience function for swapProcess(Process process, int index) below, see for details
+	 * @param process Process to be added
+	 * @param block Block to add process to (passes index)
+	 */
+	public void swapProcess(Process process, Block block) {
+		swapProcess(process, block.getIndex());
 	}
 	
 	/**
