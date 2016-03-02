@@ -4,6 +4,10 @@ import Swapping.Memory.Block;
 
 public class FirstFit implements Swap {
 	
+	public FirstFit() {
+		// unused, FirstFit does not need to remember anything
+	}
+	
 	/**
 	 * Swaps the process into memory if able, according to its algorithm.
 	 * @return true if able to swap process into a free block, false if no blocks have room for the process
