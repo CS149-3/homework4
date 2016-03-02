@@ -15,7 +15,7 @@ public class Memory {
 	 * @param index - Memory starting location
 	 * @return Integer with the size of the available block. 
 	 */
-	public int checkMem(int index){
+	private int checkMem(int index){
 		int size = 0;
 		try{
 			while(memory[size+index] == 0){
@@ -53,16 +53,16 @@ public class Memory {
 	 * @param index - Starting point of check
 	 * @return Integer value of the index location of next block or 0 if checked block is last block in memory. 
 	 */
-	public int getNextBlock(int index){
+	public Block getNextBlock(int index){
 		if(memory[index] != 0){
 			try{
 				while(memory[index] != 0){
 					index++;
 				}
 			}catch(IndexOutOfBoundsException e){
-				return 0;
+				return new Block(0, checkMem(0));
 			}
-			return index;
+			return new Block(index, checkMem(index));
 		}
 		
 		try{
@@ -70,9 +70,9 @@ public class Memory {
 				index++;
 			}
 		}catch(IndexOutOfBoundsException e){
-				return 0;
+			return new Block(0, checkMem(0));
 		}
-		return index;
+		return new Block(index, checkMem(index));
 	}
 	
 	/**
