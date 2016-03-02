@@ -49,16 +49,15 @@ public class Simulation {
 				else {
 					break;
 				}
+				// debug output. "oooooo prettyyyyy...."
+				// will replace with output specified from homework, but this is something to look at
+				System.out.println((seconds + 1) + " " + memory);
 			}
 			
-			// run processes
+			// run processes for one "second"
 			for (Process process : runningProcesses) {
 				process.run();
 			}
-			
-			// debug output. "oooooo prettyyyyy...."
-			// will replace with output specified from homework, but this is something to look at
-			System.out.println((seconds + 1) + " " + memory);
 		}
 	}
 }
