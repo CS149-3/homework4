@@ -11,6 +11,23 @@ public class Memory {
 	}
 	
 	/**
+	 * Checks specified location in memory for available blocks.
+	 * @param index - Memory starting location
+	 * @return Integer with the size of the available block. 
+	 */
+	private int checkMem(int index){
+		int size = 0;
+		try{
+			while(memory[size+index] == 0){
+				size++;
+			}
+		}catch(IndexOutOfBoundsException e){
+			return size;
+		}
+		return size;
+	}
+	
+	/**
 	 * Returns the free blocks available in memory
 	 * @return ArrayList<Block> List of free blocks
 	 */
@@ -32,30 +49,76 @@ public class Memory {
 	}
 	
 	/**
-	 * Swaps a process into memory
-	 * @param process process to swap into memory
-	 * @param block free block to swap the process into
+	 * Convenience version of getNextBlock(int index)
+	 * @param block use this block's index as starting point
+	 * @return Block return index and size of next block in memory
+	 */
+	public Block getNextBlock(Block block) {
+		return getNextBlock(block.getIndex());
+	}
+	
+	/**
+	 * Return index of next block. 
+	 * @param index - Starting point of check
+	 * @return block return index and size of next block in memory
+	 */
+	public Block getNextBlock(int index){
+		if(memory[index] != 0){
+			try{
+				while(memory[index] != 0){
+					index++;
+				}
+			}catch(IndexOutOfBoundsException e){
+				return new Block(0, checkMem(0));
+			}
+			return new Block(index, checkMem(index));
+		}
+		
+		try{
+			while(memory[index] == 0){
+				index++;
+			}
+		}catch(IndexOutOfBoundsException e){
+			return new Block(0, checkMem(0));
+		}
+		return new Block(index, checkMem(index));
+	}
+	
+	/**
+	 * Convenience function for swapProcess(Process process, int index) below, see for details
+	 * @param process Process to be added
+	 * @param block Block to add process to (passes index)
 	 */
 	public void swapProcess(Process process, Block block) {
-		// check for mistake
-		if (process.getSize() > block.size) throw new RuntimeException("Tried to assign a process of size "
-				+ process.getSize() +" to a free block of size " + block.size);
+		swapProcess(process, block.getIndex());
+	}
+	
+	/**
+	 * Enters process into Memory. Checks if dump is possible and throws RunTime exception if not.
+	 * Replaces memory indices index to index + Process object size with Process object ID and set starting index in process. 
+	 * @param process - Process to be added
+	 * @param index - location to add process
+	 */
+	public void swapProcess(Process process, int index){
+		if(process.getSize() > checkMem(index)){
+			throw new RuntimeException("Index " + index + " in memory does not have block size of " + process.getSize() + " available");
+		}
 		
-		// add to memory
-		for (int i = block.index; i < block.index + process.getSize(); i++) {
+		process.setStartingIndex(index);
+		
+		for(int i = index; i < index + process.getSize(); i++){
 			memory[i] = process.getProcessNumber();
 		}
 	}
 	
 	/**
-	 * Removes a process from memory
+	 * Removes a process from memory.  
+	 * Replaces process ID with 0. 
 	 * @param process process to remove from memory
 	 */
 	public void removeProcess(Process process) {
-		for (int i = 0; i < memory.length; i++) {
-			if (memory[i] == process.getProcessNumber()) {
-				memory[i] = 0;
-			}
+		for (int i = process.getStartingIndex(); i < (process.getStartingIndex() + process.getSize()); i++) {
+			memory[i] = 0;
 		}
 	}
 	
@@ -73,8 +136,8 @@ public class Memory {
 	 */
 	protected class Block implements Comparable<Block> {
 		
-		private int index;
-		private int size;
+		private final int index;
+		private final int size;
 		
 		/**
 		 * Constructor for Block object. Only constructable by Memory.

@@ -14,6 +14,7 @@ public class Process {
 	private int size;
 	private int duration;
 	private int runtime = 0;
+	private int startingIndex;
 	
 	public Process() {
 		
@@ -29,6 +30,10 @@ public class Process {
 	
 	public void run() {
 		runtime++;
+	}
+	
+	public int getStartingIndex(){
+		return startingIndex;
 	}
 	
 	public int getProcessNumber() {
@@ -47,7 +52,11 @@ public class Process {
 		return runtime;
 	}
 	
+	public void setStartingIndex(int start){
+		startingIndex = start;
+	}
+	
 	public String toString() {
-		return "PN: " + this.processNumber + " " + this.size + " " + this.runtime + "/" + this.duration;
+		return "PN: " + this.processNumber + " " + this.startingIndex + " " + this.size + " " + this.runtime + "/" + this.duration;
 	}
 }
