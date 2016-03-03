@@ -130,6 +130,11 @@ public class Memory {
 		return str.substring(0, str.length() - 2) + "]";
 	}
 	
+	public void clearMem(){
+		for(int i = 0; i < memory.length;i++){
+			memory[i] = 0;
+		}
+	}
 	/**
 	 * Inner class Block, represents a free block of space in memory.
 	 * @author jludeman
