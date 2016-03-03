@@ -15,6 +15,10 @@ public class Simulation {
 	
 	public static void main(String[] args) {
 		
+		// populate disk with pages
+		for (int page = 0; page < PAGES; page++) disk.add(new Page());
+		
+		// multiple runs loop
 		for (int run = 0; run < 5; run++) {
 			
 			// seed stuff, see comment on variable. Unique for each run, but not for each algorithm within a run
