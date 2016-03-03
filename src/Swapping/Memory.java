@@ -15,7 +15,7 @@ public class Memory {
 	 * @param index - Memory starting location
 	 * @return Integer with the size of the available block. 
 	 */
-	private int checkMem(int index){
+	public int checkMem(int index){
 		int size = 0;
 		try{
 			while(memory[size+index] == 0){
