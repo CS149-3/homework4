@@ -22,6 +22,10 @@ public class Page {
 		timesUsed = 0;
 	}
 	
+	/**
+	 * Copy constructor
+	 * @param parent parent page to make a copy of
+	 */
 	public Page(Page parent) {
 		this.pageId = parent.pageId;
 		this.cycleAdded = parent.cycleAdded;
@@ -29,6 +33,12 @@ public class Page {
 		this.timesUsed = parent.timesUsed;
 	}
 	
+	/**
+	 * Notify the page that it was referenced. Updated lastUsed and increments timesUsed. If the page was not already
+	 * in memory, it also updates cycleAdded.
+	 * @param cycleReferenced the cycle on which this was referenced (the loop variable)
+	 * @param memory the memory array, used to check if the page is already in memory
+	 */
 	public void referenced(int cycleReferenced, ArrayList<Page> memory) {
 		this.lastUsed = cycleReferenced;
 		this.timesUsed++;
@@ -36,18 +46,34 @@ public class Page {
 			this.cycleAdded = cycleReferenced;
 	}
 	
+	/**
+	 * Get the id number of the page
+	 * @return pageId
+	 */
 	public int getPageId() {
 		return pageId;
 	}
 	
+	/**
+	 * Get the cycle on which this process was added to memory.
+	 * @return cycleAdded
+	 */
 	public int getCycleAdded() {
 		return cycleAdded;
 	}
 	
+	/**
+	 * Get the last time the process was used (the lower the time, the earlier it was used).
+	 * @return lastUsed
+	 */
 	public int getLastUsed() {
 		return lastUsed;
 	}
 	
+	/**
+	 * Get the number of times the page has been used.
+	 * @return timesUsed
+	 */
 	public int getTimesUsed() {
 		return timesUsed;
 	}
