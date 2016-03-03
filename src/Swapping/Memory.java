@@ -122,6 +122,10 @@ public class Memory {
 		}
 	}
 	
+	public void clear() {
+		memory = new int[100];
+	}
+	
 	public String toString() {
 		String str = "[";
 		for (int mb : memory) {

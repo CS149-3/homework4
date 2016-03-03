@@ -28,6 +28,13 @@ public class Process {
 		this.duration = DURATIONS[random.nextInt(DURATIONS.length)];
 	}
 	
+	// copy constructor
+	public Process(Process parent) {
+		this.processNumber = parent.processNumber;
+		this.size = parent.size;
+		this.duration = parent.duration;
+	}
+	
 	public void run() {
 		runtime++;
 	}

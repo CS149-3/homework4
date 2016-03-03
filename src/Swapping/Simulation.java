@@ -6,7 +6,6 @@ public class Simulation {
 	
 	private static final int MINUTE = 60;
 	private static ArrayList<Process> processes = new ArrayList<Process>();
-	private static ArrayList<Process> runningProcesses = new ArrayList<Process>();
 	private static Memory memory = new Memory();
 	
 	public static void main(String[] args) {
@@ -17,15 +16,20 @@ public class Simulation {
 		}
 		
 		// run simulations
-		simulate(new FirstFit());
-		simulate(new NextFit());
-		simulate(new BestFit());
+		simulate(new FirstFit(), copyProcesses());
+		simulate(new NextFit(), copyProcesses());
+		simulate(new BestFit(), copyProcesses());
 		
 		// final output here probably
 		
 	}
 	
-	private static void simulate(Swap swap) {
+	private static void simulate(Swap swap, ArrayList<Process> processes) {
+		
+		// setup
+		ArrayList<Process> runningProcesses = new ArrayList<Process>();
+		memory.clear();
+		
 		// main simulatiom loop
 		for (int seconds = 0; seconds < MINUTE; seconds++) {
 			
@@ -59,5 +63,13 @@ public class Simulation {
 				process.run();
 			}
 		}
+	}
+	
+	private static ArrayList<Process> copyProcesses() {
+		ArrayList<Process> processesCopy = new ArrayList<Process>();
+		
+		for (Process process : processes) processesCopy.add(new Process(process));
+		
+		return processesCopy;
 	}
 }
