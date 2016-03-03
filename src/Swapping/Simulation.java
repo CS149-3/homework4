@@ -5,28 +5,37 @@ import java.util.ArrayList;
 public class Simulation {
 	
 	private static final int MINUTE = 60;
-	private static ArrayList<Process> processes = new ArrayList<Process>();
-	private static ArrayList<Process> runningProcesses = new ArrayList<Process>();
+	
+	
 	private static Memory memory = new Memory();
 	
 	public static void main(String[] args) {
+		ArrayList<Process> processesFirst = new ArrayList<Process>();
+		ArrayList<Process> processesNext = new ArrayList<Process>();
+		ArrayList<Process> processesBest = new ArrayList<Process>();
 		
 		// create processes
 		for (int i = 0; i < 150; i++) {
-			processes.add(new Process());
+			Process process = new Process();
+			processesFirst.add(process);
+			processesNext.add(process.copy());
+			processesBest.add(process.copy());
 		}
 		
 		// run simulations
-		simulate(new FirstFit());
-		simulate(new NextFit());
-		simulate(new BestFit());
+		simulate(new FirstFit(), processesFirst);
+		simulate(new NextFit(), processesNext);
+		simulate(new BestFit(), processesBest);
 		
 		// final output here probably
 		
 	}
 	
-	private static void simulate(Swap swap) {
-		// main simulatiom loop
+	private static void simulate(Swap swap, ArrayList<Process> processes) {
+		//Initialize simulation
+		ArrayList<Process> runningProcesses = new ArrayList<Process>();
+		memory.clearMem();
+		// main simulation loop
 		for (int seconds = 0; seconds < MINUTE; seconds++) {
 			
 			// clean memory

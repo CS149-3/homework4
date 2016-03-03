@@ -28,6 +28,15 @@ public class Process {
 		this.duration = DURATIONS[random.nextInt(DURATIONS.length)];
 	}
 	
+	public Process(int num, int size, int duration, int runtime, int startingIndex)
+	{
+		this.processNumber = num;
+		this.size = size;
+		this.duration = duration;
+		this.runtime = runtime;
+		this.startingIndex = startingIndex;
+	}
+	
 	public void run() {
 		runtime++;
 	}
@@ -54,6 +63,10 @@ public class Process {
 	
 	public void setStartingIndex(int start){
 		startingIndex = start;
+	}
+	
+	public Process copy(){
+		return new Process(this.processNumber, this.size, this.duration, this.runtime, this.startingIndex);
 	}
 	
 	public String toString() {
