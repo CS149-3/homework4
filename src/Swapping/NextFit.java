@@ -31,6 +31,8 @@ public class NextFit implements Swap {
 		
 		memory.swapProcess(process, index);
 		lastIndex = index + process.getSize();
+		if(lastIndex == 100)
+			lastIndex = 0;
 		return true;
 	}
 	
@@ -48,6 +50,6 @@ public class NextFit implements Swap {
 		if(nextBlock.getIndex() == lastIndex){
 			return -1;
 		}
-		return search(index, size, memory);
+		return search(nextBlock.getIndex(), size, memory);
 	}
 }
