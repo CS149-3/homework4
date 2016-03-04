@@ -64,8 +64,9 @@ public class Memory {
 	 */
 	public Block getNextBlock(int index){
 		if(memory[index] != 0){
+			int process = memory[index];
 			try{
-				while(memory[index] != 0){
+				while(memory[index] == process){
 					index++;
 				}
 			}catch(IndexOutOfBoundsException e){

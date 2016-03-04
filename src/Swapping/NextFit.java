@@ -41,15 +41,22 @@ public class NextFit implements Swap {
 		if(sizeAtIndex >= size)
 			return index;
 		
-		Block nextBlock = memory.getNextBlock(index);
-		
-		if(nextBlock.getSize() >= size){
-			return nextBlock.getIndex();
-		}
-		
-		if(nextBlock.getIndex() == lastIndex){
-			return -1;
-		}
-		return search(nextBlock.getIndex(), size, memory);
+		boolean round = false;
+		do{
+			Block nextBlock = memory.getNextBlock(index);
+					
+			if(nextBlock.getSize() >= size){
+				return nextBlock.getIndex();
+			}
+			
+			if((nextBlock.getIndex() >= lastIndex && round)|| (nextBlock.getIndex() == 0 && round)){
+				return -1;
+			}
+			
+			if(nextBlock.getIndex() == 0){
+				round = true;
+			}
+			index = nextBlock.getIndex();
+		}while(true);
 	}
 }
