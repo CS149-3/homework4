@@ -15,7 +15,7 @@ public class Memory {
 	 * @param index - Memory starting location
 	 * @return Integer with the size of the available block. 
 	 */
-	private int checkMem(int index){
+	public int checkMem(int index){
 		int size = 0;
 		try{
 			while(memory[size+index] == 0){
@@ -64,8 +64,9 @@ public class Memory {
 	 */
 	public Block getNextBlock(int index){
 		if(memory[index] != 0){
+			int process = memory[index];
 			try{
-				while(memory[index] != 0){
+				while(memory[index] == process){
 					index++;
 				}
 			}catch(IndexOutOfBoundsException e){

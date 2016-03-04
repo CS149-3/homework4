@@ -3,9 +3,10 @@ package Swapping;
 import Swapping.Memory.Block;
 
 public class NextFit implements Swap {
-	
+	private int lastIndex;
 	public NextFit() {
 		// consider keeping track of a "last index used" here, as a starting point for looking for room
+		lastIndex = 0;
 	}
 	
 	/**
@@ -23,8 +24,39 @@ public class NextFit implements Swap {
 		 * If there was no room found, follow up with a search through the blocks doing the opposite, ignoring all
 		 * that are at or after your last used index.
 		 */
+		int index = search(lastIndex, process.getSize(), memory);
+		if(index < 0){		
+			return false;
+		}
 		
-		return false;
+		memory.swapProcess(process, index);
+		lastIndex = index + process.getSize();
+		if(lastIndex == 100)
+			lastIndex = 0;
+		return true;
 	}
-
+	
+	private int search(int index, int size, Memory memory){
+		int sizeAtIndex = memory.checkMem(index);
+		if(sizeAtIndex >= size)
+			return index;
+		
+		boolean round = false;
+		do{
+			Block nextBlock = memory.getNextBlock(index);
+					
+			if(nextBlock.getSize() >= size){
+				return nextBlock.getIndex();
+			}
+			
+			if((nextBlock.getIndex() >= lastIndex && round)|| (nextBlock.getIndex() == 0 && round)){
+				return -1;
+			}
+			
+			if(nextBlock.getIndex() == 0){
+				round = true;
+			}
+			index = nextBlock.getIndex();
+		}while(true);
+	}
 }
