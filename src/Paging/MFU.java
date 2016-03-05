@@ -10,7 +10,7 @@ public class MFU implements Algorithm {
 				return null;
 			}
 		}
-		if(memory.size()<1){
+		if(memory.size()<4){
 			for(int i=0;i<disk.size();i++){
 				if(disk.get(i).getPageId()==page){
 					memory.add(disk.get(i));
@@ -18,14 +18,7 @@ public class MFU implements Algorithm {
 				}
 			}
 		}
-		else if(memory.size()<4){
-			for(int i=0;i<disk.size();i++){
-				if(disk.get(i).getPageId()==page){
-					memory.add(disk.get(i));
-					disk.remove(i);
-				}
-			}
-		}
+
 		else{
 			Page mostFrequentlyUsedPage=memory.get(0);
 			int indexOfMemory=0;
