@@ -5,29 +5,26 @@ import java.util.ArrayList;
 public class MFU implements Algorithm {
 
 	public Integer pageReferenced(int page, ArrayList<Page> disk, ArrayList<Page> memory) {
-		if(memory.size()<1){
-			for(int i=0;i<disk.size();i++){
-				if(disk.get(i).getPageId()==page){
-					memory.add(disk.get(i));
-					disk.remove(i);
-					return page;
-				}
-			}
-		}
 		for(int i=0;i<memory.size();i++){
 			if(memory.get(i).getPageId()==page){
 				return null;
 			}
 		}
-		if(memory.size()<4){
+		if(memory.size()<1){
 			for(int i=0;i<disk.size();i++){
 				if(disk.get(i).getPageId()==page){
 					memory.add(disk.get(i));
 					disk.remove(i);
-					return page;
 				}
 			}
-
+		}
+		else if(memory.size()<4){
+			for(int i=0;i<disk.size();i++){
+				if(disk.get(i).getPageId()==page){
+					memory.add(disk.get(i));
+					disk.remove(i);
+				}
+			}
 		}
 		else{
 			Page mostFrequentlyUsedPage=memory.get(0);
