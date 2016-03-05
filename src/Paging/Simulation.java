@@ -15,6 +15,10 @@ public class Simulation {
 	
 	public static void main(String[] args) {
 		
+		// set up arrays
+		disk = new ArrayList<Page>();
+		memory = new ArrayList<Page>();
+		
 		// populate disk with pages
 		for (int page = 0; page < PAGES; page++) disk.add(new Page());
 		
@@ -51,6 +55,7 @@ public class Simulation {
 			
 			// set new page with wrapping
 			page = page + deltaPages < PAGES ? page + deltaPages : page + deltaPages - PAGES;
+			if (page == -1) page = PAGES - 1;
 			
 			// update page reference
 			ArrayList<Page> combined = new ArrayList<Page>();
