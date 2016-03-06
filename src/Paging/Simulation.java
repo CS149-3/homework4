@@ -41,7 +41,11 @@ public class Simulation {
 			totalHitsMFU += simulate(new MFU(), copyPageArray(disk), copyPageArray(memory));
 			totalHitsRand += simulate(new Rand(), copyPageArray(disk), copyPageArray(memory));
 		}
-		
+		System.out.println("FIFO hit ratio " + Simulation.totalHitsFIFO + "/500");
+		System.out.println("LRU  hit ratio " + Simulation.totalHitsLRU + "/500");
+		System.out.println("LFU  hit ratio " + Simulation.totalHitsLFU + "/500");
+		System.out.println("MFU  hit ratio " + Simulation.totalHitsMFU + "/500");
+		System.out.println("Rand hit ratio " + Simulation.totalHitsRand + "/500");
 	}
 	
 	private static int simulate(Algorithm algorithm, ArrayList<Page> disk, ArrayList<Page> memory) {
