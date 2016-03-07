@@ -26,19 +26,19 @@ public class LFU implements Algorithm {
 		//move least frequently used page out of memory array and back into disk
 		else{
 			Page leastFrequentlyUsedPage = memory.get(0);
-			int indexOfMemory=0;
-			Page temp=null;
+			int indexOfMemory = 0;
+			Page temp = null;
 			
 			for(int i=1; i<memory.size(); i++){
 				if(Page.compareByLeastFrequent().compare(leastFrequentlyUsedPage, memory.get(i)) == 1){
 					leastFrequentlyUsedPage=memory.get(i);
-					indexOfMemory=i;
+					indexOfMemory = i;
 				}
 			}
 			
-			for(int i=0;i<disk.size();i++){
-				if(disk.get(i).getPageId()==page){
-					temp=disk.get(i);
+			for(int i=0; i<disk.size(); i++){
+				if(disk.get(i).getPageId() == page){
+					temp = disk.get(i);
 					disk.remove(i);
 				}
 			}
