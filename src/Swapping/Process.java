@@ -70,6 +70,6 @@ public class Process {
 	}
 	
 	public String toString() {
-		return "PN: " + this.processNumber + " " + this.startingIndex + " " + this.size + " " + this.runtime + "/" + this.duration;
+		return "Size: " + this.size + ", Duration: " + this.duration;
 	}
 }

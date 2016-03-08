@@ -78,6 +78,10 @@ public class Page {
 		return timesUsed;
 	}
 	
+	public String toString() {
+		return "" + this.pageId;
+	}
+	
 	/**
 	 * Returns a comparator to compare by when a page was added. Sorts by first added page to last added page.
 	 * @return comparator a comparator to compare by cycle.

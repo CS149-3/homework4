@@ -28,19 +28,34 @@ public class Simulation {
 		for (int page = 0; page < PAGES; page++) disk.add(new Page());
 		
 		// multiple runs loop
-		for (int run = 0; run < 5; run++) {
+		for (int run = 1; run <= 5; run++) {
+			System.out.println("Run " + run);
+			System.out.println("-----------------------------------------------");
 			
 			// seed stuff, see comment on variable. Unique for each run, but not for each algorithm within a run
 			Random random = new Random();
 			Simulation.seed = random.nextLong();
 			
 			// simulate
+			System.out.println("\nFIFO Run");
+			System.out.println("\n-----------------------------------------------\n");
 			totalHitsFIFO += simulate(new FIFO(), copyPageArray(disk), copyPageArray(memory));
+			System.out.println("\nLRU Run");
+			System.out.println("\n-----------------------------------------------\n");
 			totalHitsLRU += simulate(new LRU(), copyPageArray(disk), copyPageArray(memory));
+			System.out.println("\nLFU Run");
+			System.out.println("\n-----------------------------------------------\n");
 			totalHitsLFU += simulate(new LFU(), copyPageArray(disk), copyPageArray(memory));
+			System.out.println("\nMFU Run");
+			System.out.println("\n-----------------------------------------------\n");
 			totalHitsMFU += simulate(new MFU(), copyPageArray(disk), copyPageArray(memory));
+			System.out.println("\nRandom Run");
+			System.out.println("\n-----------------------------------------------\n");
 			totalHitsRand += simulate(new Rand(), copyPageArray(disk), copyPageArray(memory));
 		}
+		
+		// average output
+		System.out.println("\n");
 		System.out.println("FIFO hit ratio " + Simulation.totalHitsFIFO + "/500");
 		System.out.println("LRU  hit ratio " + Simulation.totalHitsLRU + "/500");
 		System.out.println("LFU  hit ratio " + Simulation.totalHitsLFU + "/500");
