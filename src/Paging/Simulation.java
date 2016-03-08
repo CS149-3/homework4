@@ -12,6 +12,11 @@ public class Simulation {
 	
 	private static ArrayList<Page> disk;
 	private static ArrayList<Page> memory;
+	private static int totalHitsFIFO = 0;
+	private static int totalHitsLRU = 0;
+	private static int totalHitsLFU = 0;
+	private static int totalHitsMFU = 0;
+	private static int totalHitsRand = 0;
 	
 	public static void main(String[] args) {
 		
@@ -30,18 +35,22 @@ public class Simulation {
 			Simulation.seed = random.nextLong();
 			
 			// simulate
-			simulate(new FIFO(), copyPageArray(disk), copyPageArray(memory));
-			simulate(new LRU(), copyPageArray(disk), copyPageArray(memory));
-			simulate(new LFU(), copyPageArray(disk), copyPageArray(memory));
-			simulate(new MFU(), copyPageArray(disk), copyPageArray(memory));
-			simulate(new Rand(), copyPageArray(disk), copyPageArray(memory));
+			totalHitsFIFO += simulate(new FIFO(), copyPageArray(disk), copyPageArray(memory));
+			totalHitsLRU += simulate(new LRU(), copyPageArray(disk), copyPageArray(memory));
+			totalHitsLFU += simulate(new LFU(), copyPageArray(disk), copyPageArray(memory));
+			totalHitsMFU += simulate(new MFU(), copyPageArray(disk), copyPageArray(memory));
+			totalHitsRand += simulate(new Rand(), copyPageArray(disk), copyPageArray(memory));
 		}
-		
+		System.out.println("FIFO hit ratio " + Simulation.totalHitsFIFO + "/500");
+		System.out.println("LRU  hit ratio " + Simulation.totalHitsLRU + "/500");
+		System.out.println("LFU  hit ratio " + Simulation.totalHitsLFU + "/500");
+		System.out.println("MFU  hit ratio " + Simulation.totalHitsMFU + "/500");
+		System.out.println("Rand hit ratio " + Simulation.totalHitsRand + "/500");
 	}
 	
-	private static void simulate(Algorithm algorithm, ArrayList<Page> disk, ArrayList<Page> memory) {
+	private static int simulate(Algorithm algorithm, ArrayList<Page> disk, ArrayList<Page> memory) {
 		
-		int hitRatio = 0;
+		int successfulHits = 0;
 		Random random = new Random(Simulation.seed);
 		
 		// randomly set first page reference
@@ -76,14 +85,14 @@ public class Simulation {
 			
 			// if page needed to be swapped into memory, print changes
 			if (evictedPage == null) {
-				hitRatio++;
+				successfulHits++;
 			}
 			else {
 				System.out.println("Page moved in: " + page);
 				System.out.println("Page evicted: " + evictedPage);
 			}
 		}
-		
+		return successfulHits;
 	}
 	
 	private static ArrayList<Page> copyPageArray(ArrayList<Page> pages) {
