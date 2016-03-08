@@ -124,11 +124,19 @@ public class Memory {
 	}
 	
 	public String toString() {
-		String str = "[";
+		String str = "";
 		for (int mb : memory) {
-			str += mb + ", ";
+			if (mb == 0) {
+				str += ".";
+			}
+			else {
+				String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+				int i = mb;
+				while (i > chars.length()) i -= chars.length();
+				str += chars.charAt(i-1);
+			}
 		}
-		return str.substring(0, str.length() - 2) + "]";
+		return str.substring(0, str.length() - 2);
 	}
 	
 	public void clearMem(){
